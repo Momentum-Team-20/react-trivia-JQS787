@@ -1,45 +1,66 @@
-import { useEffect, useState } from 'react'
-import './App.css'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import './App.css';
+import QuizPage from './components/quiz-page';
 
 function App() {
-  const [categoryList, setCategoryList] = useState([])
+  const [categoryList, setCategoryList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
   useEffect(() => {
-    axios
-      .get('https://opentdb.com/api_category.php')
-      .then((res) => {setCategoryList(res.data.trivia_categories)
-      console.log(res.data)})
-  }, [])
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('https://opentdb.com/api_category.php');
+        setCategoryList(response.data.trivia_categories);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        setLoading(false);
+      }
+    };
 
-  console.log('render runs')
+    fetchCategories();
+  }, []);
+
+  const chooseCategory = (categoryId) => {
+    setSelectedCategoryId(categoryId);
+  };
+
+  if (loading) {
+    return <h1>Page loading 💬</h1>;
+  }
+
   return (
     <div>
-      <h1>React Trivia Game</h1>
+      <h1>Trivia Game</h1>
       <div className="category-list">
         {categoryList.map((category) => (
-          <Category 
+          <Category
             key={category.id}
             categoryId={category.id}
             name={category.name}
+            selectedCategoryId={selectedCategoryId}
+            chooseCategory={chooseCategory}
           />
         ))}
       </div>
     </div>
-  )
+  );
 }
 
-function Category({name, categoryId}) {
-
-  const clickCategory = () => {
-    console.log(`https://opentdb.com/api.php?amount=10&category=${categoryId}`);
-  }
+function Category({ categoryId, name, selectedCategoryId, chooseCategory }) {
+  const categoryIsSelected = categoryId === selectedCategoryId;
 
   return (
-    <div onClick={clickCategory}>
-      <div>{name}</div>
+    <div onClick={() => chooseCategory(categoryId)}>
+      {categoryIsSelected ? (
+        <QuizPage categoryID={categoryId} />
+      ) : (
+        <div>{name}</div>
+      )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
