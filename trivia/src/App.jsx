@@ -3,6 +3,7 @@ import axios from 'axios';
 import './App.css';
 import QuizPage from './components/quiz-page';
 
+
 function App() {
   const [categoryList, setCategoryList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -53,14 +54,18 @@ function Category({ categoryId, name, selectedCategoryId, chooseCategory }) {
   const categoryIsSelected = categoryId === selectedCategoryId;
 
   return (
-    <div onClick={() => chooseCategory(categoryId)}>
+    <button
+      className={categoryIsSelected ? 'selected-category' : ''}
+      onClick={() => chooseCategory(categoryId)}
+    >
       {categoryIsSelected ? (
         <QuizPage categoryID={categoryId} />
       ) : (
         <div>{name}</div>
       )}
-    </div>
+    </button>
   );
 }
+
 
 export default App;

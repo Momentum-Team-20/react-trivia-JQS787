@@ -13,20 +13,14 @@ cursor: pointer;
 
 }
 
-/* App.css */
-.category-list {
-  /* Your existing styles for the category list */
-}
+
 
 .category-item {
   cursor: pointer;
   transition: background-color 0.3s ease; /* Adding a smooth transition effect */
 }
 
-.category-item:hover,
-.category-item:active {
-  background-color: #e0e0e0; /* Change this color to the desired shade */
-}
+
 
 
 
@@ -40,4 +34,11 @@ cursor: pointer;
   background-color: #ff8e8e; /* Red background for incorrect answers */
   color: #8b0000; /* Dark red text color */
 }
-  
+
+.selected-category {
+  background-color: #d5dce3; /* Set your preferred background color */
+  color: #444782; /* Set your preferred text color */
+  font-weight: bold;
+  /* Add any additional styles to highlight the selected category */
+}
+
