@@ -5,6 +5,8 @@ import './QuizPage.css';
 const QuizPage = ({ categoryID }) => {
   const [questions, setQuestions] = useState([]);
   const [score, setScore] = useState(0);
+  const [incorrectCount, setIncorrectCount] = useState(0);
+  const [gameLost, setGameLost] = useState(false);
 
   useEffect(() => {
     axios.get(`https://opentdb.com/api.php?amount=10&category=${categoryID}`)
@@ -12,10 +14,20 @@ const QuizPage = ({ categoryID }) => {
   }, [categoryID]);
 
   const handleAnswerClick = (value, correctAnswer) => {
+    if (gameLost) {
+      return;
+    }
+
     if (value === correctAnswer) {
       setScore(score + 1);
+    } else {
+      setIncorrectCount(incorrectCount + 1);
+
+      if (incorrectCount >= 2) {
+        setGameLost(true);
+        window.alert('Game Over! You lost.'); // Display the alert when the game is lost
+      }
     }
-    // Add your logic for handling correct/incorrect answers
   };
 
   return (
@@ -29,7 +41,8 @@ const QuizPage = ({ categoryID }) => {
           onAnswerClick={(value) => handleAnswerClick(value, quiz.correct_answer)}
         />
       ))}
-      <div className="score">Score: {score} / {questions.length}</div>
+      {gameLost && <div className="game-lost-message">Game Over! You lost.</div>}
+      {!gameLost && <div className="score">Score: {score} / {questions.length}</div>}
     </div>
   );
 };
@@ -62,3 +75,5 @@ function Quiz({ question, correctAnswer, incorrectAnswers, onAnswerClick }) {
 }
 
 export default QuizPage;
+
+

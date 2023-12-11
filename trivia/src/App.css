@@ -17,28 +17,45 @@ cursor: pointer;
 
 .category-item {
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Adding a smooth transition effect */
+  transition: background-color 0.3s ease; 
 }
 
 
 
-
-
-/* Green background for correct answers */
 .correct {
   background-color: #8eff8e; 
-  color: #006400; /* Dark green text color */
+  color: #006400; 
 }
 
 .incorrect {
-  background-color: #ff8e8e; /* Red background for incorrect answers */
-  color: #8b0000; /* Dark red text color */
+  background-color: #ff1111;
+  color: #302019; 
 }
+
+
+body {
+background-color: #ffff55a3;
+
+}
+
+button {
+  background-color: rgba(14, 210, 37, 0.049);
+  color: #22231c;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  
+  
+}
+  
 
 .selected-category {
-  background-color: #d5dce3; /* Set your preferred background color */
-  color: #444782; /* Set your preferred text color */
+  background-color: #c8d0ff; 
+  color: #4c2d29; 
   font-weight: bold;
-  /* Add any additional styles to highlight the selected category */
+  
 }
+  
+  
 
+  
